@@ -89,6 +89,18 @@ cd claude-code-flow
 
 ## 🌟 Key Features
 
+### 📋 Task Management & Multi-Agent Orchestration
+
+<p align="center">
+  <img src="assets/images/image.png" alt="Claude Code in Action" width="700">
+</p>
+
+The screenshot above shows Claude Code orchestrating multiple agents to create this very guide, demonstrating:
+- **TodoWrite** for task tracking and management
+- **Extended thinking** process (marked with *Thinking...*)
+- **Parallel agent spawning** for different research tasks
+- **Real-time execution** with Bash commands and specialized agents
+
 ### 🧠 Extended Thinking Modes
 ```bash
 # Progressive thinking levels

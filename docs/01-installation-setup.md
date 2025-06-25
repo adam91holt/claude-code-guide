@@ -127,38 +127,38 @@ Create a `CLAUDE.md` file in your project root:
 
 ```bash
 # Open permissions configuration
-claude permissions
+/permissions
 
-# Or create .claude/permissions.json manually
+# Or create .claude/settings.json manually
+mkdir -p .claude
 ```
 
-Example permissions file:
+Example settings file (`.claude/settings.json`):
 
 ```json
 {
-  "rules": [
-    {
-      "tool": "Bash",
-      "pattern": "npm run *",
-      "allow": true
-    },
-    {
-      "tool": "Bash",
-      "pattern": "rm -rf *",
-      "allow": false
-    },
-    {
-      "tool": "WebFetch",
-      "domain": "docs.anthropic.com",
-      "allow": true
-    },
-    {
-      "tool": "Write",
-      "pattern": "/etc/*",
-      "allow": false
+  "permissions": {
+    "allowedCommands": [
+      "npm run *",
+      "git *",
+      "node *",
+      "python *"
+    ],
+    "blockedCommands": [
+      "rm -rf /",
+      "sudo *"
+    ],
+    "allowedDomains": [
+      "docs.anthropic.com",
+      "github.com",
+      "npmjs.com"
+    ],
+    "fileAccess": {
+      "readOnly": ["/etc", "/usr", "/bin"],
+      "noAccess": ["/private", "~/.ssh"]
     }
-  ],
-  "defaultPolicy": "ask"
+  },
+  "defaultBehavior": "ask"
 }
 ```
 
