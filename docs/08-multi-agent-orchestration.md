@@ -20,7 +20,7 @@ Multi-agent orchestration allows multiple AI agents to work in parallel on compl
 |--------|-------------|--------|
 | `--strategy` | Orchestration strategy | research, development, analysis, testing, optimization, maintenance |
 | `--mode` | Coordination mode | centralized, distributed, hierarchical, mesh, hybrid |
-| `--max-agents` | Maximum number of agents | 1-10 (default: 5) |
+| `--max-agents` | Maximum number of agents | 1-10 (default: 5, max: 10) |
 | `--parallel` | Enable parallel execution | flag |
 | `--monitor` | Real-time monitoring | flag |
 | `--output` | Output format | json, sqlite, csv, html |
@@ -403,8 +403,10 @@ Phase 3: Integration & Testing (1 agent)
 ### 1. Agent Sizing
 
 - **Small tasks**: 2-3 agents
-- **Medium features**: 4-6 agents
-- **Large projects**: 7-10 agents
+- **Medium features**: 4-6 agents  
+- **Large projects**: 7-10 agents (maximum: 10 agents per swarm)
+
+**Note**: The maximum number of agents per swarm is 10. For larger projects, consider breaking work into multiple sequential swarms.
 
 ### 2. Strategy Selection
 

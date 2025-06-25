@@ -23,11 +23,14 @@ Effective cost management is crucial when using Claude Code at scale. This guide
 
 ### Plan Limits
 
-| Plan | 5-Hour Window | Daily Average | Best Model |
-|------|---------------|---------------|------------|
-| **Pro ($20/mo)** | 10-40 prompts | ~50-200 prompts | Sonnet 4 |
-| **Max 5x ($100/mo)** | 50-200 prompts | ~250-1,000 prompts | Both |
-| **Max 20x ($200/mo)** | 200-800 prompts | ~1,000-4,000 prompts | Both |
+| Plan | Price | 5-Hour Window | Daily Average | Best Model |
+|------|-------|---------------|---------------|------------|
+| **Pro** | $20/mo | 10-40 prompts | ~50-200 prompts | Sonnet 4 |
+| **Max 5x** | $100/mo | 50-200 prompts | ~250-1,000 prompts | Both |
+| **Max 20x** | $200/mo | 200-800 prompts | ~1,000-4,000 prompts | Both |
+| **Enterprise** | Custom | Unlimited* | Custom quotas | All models + priority |
+
+*Enterprise plans include custom rate limits, dedicated infrastructure, and volume discounts. Contact Anthropic sales for pricing.
 
 ## Installing ccusage
 
@@ -37,11 +40,14 @@ The `ccusage` tool provides comprehensive token usage analytics:
 # Install globally
 npm install -g ccusage
 
-# Or use without installation
+# Or use without installation  
 npx ccusage@latest
 
 # Install specific version
 npm install -g ccusage@2.1.0
+
+# Verify installation
+ccusage --version
 ```
 
 ## Usage Monitoring

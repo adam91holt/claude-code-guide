@@ -11,21 +11,44 @@
 - **Memory**: Minimum 8GB RAM (16GB recommended)
 - **Storage**: At least 2GB free space
 
+## Version Compatibility
+
+| Claude Version | Desktop App | Claude-Flow | MCP Support | SPARC Modes |
+|----------------|-------------|-------------|-------------|-------------|
+| **Latest (2025)** | ✅ Built-in | ✅ v1.0+ | ✅ Full | ✅ v1.0+ |
+| **Pro Plan** | ✅ Sonnet 4 only | ✅ Limited | ✅ Full | ✅ Limited |
+| **Max Plan** | ✅ All models | ✅ Full | ✅ Full | ✅ Full |
+
+**Note**: Features and availability may vary by subscription tier and region.
+
 ## Installation Methods
 
-### Method 1: NPM Global Installation (Recommended)
+### Method 1: Claude Desktop App (Primary Method)
 
 ```bash
-# Install Claude Code CLI globally
-npm install -g @anthropic/claude-cli
+# Download Claude desktop app from:
+# https://claude.ai/download
 
-# Verify installation
-claude --version
+# Claude Code is built into the desktop app
+# No separate CLI installation needed
 
-# Expected output: claude-cli version X.X.X
+# After installation, Claude Code commands are available
+# within Claude chat sessions
 ```
 
-### Method 2: Claude-Flow Enhanced Installation
+### Method 2: NPM Global Installation (Experimental)
+
+> **⚠️ Warning**: This method is experimental and the package `@anthropic/claude-cli` may not exist. The primary and recommended way to use Claude Code is through the Claude desktop app.
+
+```bash
+# Install Claude Code CLI globally (experimental - may not work)
+npm install -g @anthropic/claude-cli
+
+# Verify installation (if package exists)
+claude --version
+```
+
+### Method 3: Claude-Flow Enhanced Installation
 
 For the complete development environment with multi-agent orchestration:
 
@@ -44,28 +67,29 @@ npm install
 ./claude-flow --version
 ```
 
-### Method 3: Docker Installation
+### Method 4: Docker Installation (Experimental)
+
+> **⚠️ Warning**: The Docker image `anthropic/claude-code:latest` availability is not confirmed by official sources. This method may not work.
 
 ```bash
-# Pull official Claude Code image
+# Pull Claude Code image (experimental - may not exist)
 docker pull anthropic/claude-code:latest
 
-# Run with volume mounting
+# Run with volume mounting (if image exists)
 docker run -it -v $(pwd):/workspace anthropic/claude-code
 ```
 
 ## Authentication
 
-### Claude Subscription Authentication
+### Claude Desktop App Authentication
 
 ```bash
-# Login with Claude Pro/Max subscription
-claude auth login --subscription
+# Authentication is handled through the Claude desktop app
+# Simply sign in to your Claude account in the app
+# No separate CLI authentication needed
 
-# You'll be prompted to:
-# 1. Open browser to claude.ai
-# 2. Copy authentication token
-# 3. Paste token in terminal
+# For Pro/Max features, ensure your subscription is active
+# in your Claude account settings
 ```
 
 ### API Key Authentication
@@ -81,13 +105,14 @@ claude auth login --api-key sk-ant-...
 claude auth status
 ```
 
-### Console Account Authentication
+### Anthropic API Authentication (For API Access)
 
 ```bash
-# For Anthropic Console users
-claude auth login --console
+# For direct API usage (separate from Claude Code)
+# Set API key as environment variable
+export ANTHROPIC_API_KEY="sk-ant-..."
 
-# Follow browser authentication flow
+# This is for API access, not Claude Code within the desktop app
 ```
 
 ## Initial Configuration

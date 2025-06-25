@@ -229,7 +229,7 @@ TodoWrite([
   },
   {
     id: "design",
-    content: "Design authentication architecture",
+    content: "Design authentication architecture", 
     status: "in_progress",
     priority: "high"
   },
@@ -237,8 +237,7 @@ TodoWrite([
     id: "implement",
     content: "Implement authentication system",
     status: "pending",
-    priority: "high",
-    dependencies: ["design"]
+    priority: "high"
   }
 ]);
 ```

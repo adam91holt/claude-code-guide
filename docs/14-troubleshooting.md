@@ -478,6 +478,165 @@ rm -rf ~/.claude/sessions
 ./claude-flow init --force
 ```
 
+## Swarm Coordination Issues
+
+### Problem: Agents Not Starting
+
+```bash
+# Check swarm status
+./claude-flow status
+
+# Common causes:
+# - Insufficient memory (agents need ~2GB each)
+# - Port conflicts (default 3000-3010)
+# - Previous swarm still running
+
+# Solution:
+./claude-flow swarm kill  # Kill all agents
+./claude-flow swarm "task" --max-agents 3  # Reduce agent count
+```
+
+### Problem: Memory Coordination Failures
+
+```bash
+# Symptoms: Agents can't share data
+# Check memory service
+./claude-flow memory stats
+
+# Reset memory if corrupted
+./claude-flow memory cleanup --force
+./claude-flow memory init
+
+# Use namespaced keys
+Memory.store("swarm/agent1/data", data)  # Good
+Memory.store("data", data)  # Bad - may conflict
+```
+
+### Problem: Swarm Deadlock
+
+```bash
+# Detect circular dependencies
+./claude-flow swarm status --dependencies
+
+# Break deadlock
+./claude-flow swarm pause
+./claude-flow agent kill <agent-id>
+./claude-flow swarm resume
+```
+
+## CI/CD Integration Problems
+
+### Problem: Claude Commands Fail in CI
+
+```yaml
+# GitHub Actions example
+name: Claude CI
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      # Common fix: Install dependencies
+      - name: Setup Claude
+        run: |
+          # Install Node.js first
+          curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          
+          # Install claude-flow
+          git clone https://github.com/ruvnet/claude-code-flow
+          cd claude-code-flow && npm install
+          
+      # Set environment
+      - name: Configure Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "export ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY" >> $GITHUB_ENV
+          ./claude-flow/claude-flow init --ci
+```
+
+### Problem: Docker Build Failures
+
+```dockerfile
+# Fixed Dockerfile for Claude Code
+FROM node:18-alpine
+
+# Install dependencies
+RUN apk add --no-cache git python3 make g++
+
+# Install claude-flow
+WORKDIR /app
+RUN git clone https://github.com/ruvnet/claude-code-flow .
+RUN npm install
+
+# Copy project
+COPY . /project
+WORKDIR /project
+
+# Run Claude commands
+CMD ["./app/claude-flow", "sparc", "run", "tester", "Run all tests"]
+```
+
+### Problem: Secrets Management
+
+```bash
+# Never commit secrets
+# Use environment variables in CI
+
+# GitLab CI example
+variables:
+  ANTHROPIC_API_KEY: $ANTHROPIC_API_KEY
+
+script:
+  - export ANTHROPIC_API_KEY
+  - ./claude-flow auth verify
+  - ./claude-flow sparc "Deploy application"
+```
+
+## Common Error Codes
+
+### Authentication Errors
+
+| Error Code | Description | Solution |
+|------------|-------------|----------|
+| `AUTH_001` | Invalid API key format | Ensure key starts with `sk-ant-` |
+| `AUTH_002` | API key expired | Regenerate API key in console |
+| `AUTH_003` | Insufficient permissions | Upgrade subscription or check scopes |
+| `AUTH_004` | Rate limit exceeded | Wait or upgrade plan |
+| `AUTH_005` | Account suspended | Contact Anthropic support |
+
+### MCP Errors
+
+| Error Code | Description | Solution |
+|------------|-------------|----------|
+| `MCP_001` | Server connection failed | Check server installation and config |
+| `MCP_002` | Server timeout | Increase timeout or check server health |
+| `MCP_003` | Invalid server configuration | Validate `.mcp.json` syntax |
+| `MCP_004` | Server crashed | Check server logs and restart |
+| `MCP_005` | Permission denied | Check file/directory permissions |
+
+### Memory Errors
+
+| Error Code | Description | Solution |
+|------------|-------------|----------|
+| `MEM_001` | Memory quota exceeded | Clean up old entries or upgrade plan |
+| `MEM_002` | Invalid memory key | Use valid key format (alphanumeric + `/`) |
+| `MEM_003` | Memory corruption | Export data and reset memory |
+| `MEM_004` | Concurrent access error | Retry operation |
+
+### Swarm Coordination Errors
+
+| Error Code | Description | Solution |
+|------------|-------------|----------|
+| `SWARM_001` | Agent spawn failed | Check system resources |
+| `SWARM_002` | Memory coordination failure | Reset swarm memory namespace |
+| `SWARM_003` | Agent deadlock | Kill deadlocked agents |
+| `SWARM_004` | Maximum agents exceeded | Reduce `--max-agents` to 10 or less |
+| `SWARM_005` | Strategy not found | Use valid strategy name |
+
 ## Getting Help
 
 ### Built-in Help
@@ -531,6 +690,7 @@ When reporting issues, include:
 ## Next Steps
 
 - Explore [Examples & Recipes](15-examples-recipes.md) for solutions
+- Check [API & SDK Reference](16-api-sdk-reference.md) for programmatic access
 - Review [Best Practices](12-best-practices.md) to avoid issues
 - Return to [Main Documentation](../README.md)
 

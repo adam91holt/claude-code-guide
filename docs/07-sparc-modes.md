@@ -1,12 +1,14 @@
-# SPARC Development Modes
+# SPARC Development Modes (Claude-Flow Feature)
 
 [← Back: Extended Thinking](06-extended-thinking.md) | [Main](../README.md) | [Next: Multi-Agent Orchestration →](08-multi-agent-orchestration.md)
 
 ---
 
+> **🛠️ Claude-Flow Specific Feature**: SPARC modes are not part of official Claude Code. They are a custom development methodology implemented in the claude-flow tool. To use SPARC modes, you must install claude-flow separately.
+
 ## What is SPARC?
 
-SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) is a structured methodology that provides 17 specialized AI development modes for different aspects of software engineering.
+SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) is a structured methodology implemented by claude-flow that provides 17 specialized AI development modes for different aspects of software engineering. This is an enhancement built on top of Claude's capabilities, not a native Claude feature.
 
 ## Available SPARC Modes
 

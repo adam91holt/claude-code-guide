@@ -183,7 +183,7 @@ TodoWrite([
     priority: "high"
   },
   {
-    id: "api",
+    id: "api", 
     content: "Implement REST API endpoints",
     status: "in_progress",
     priority: "high"
@@ -192,15 +192,13 @@ TodoWrite([
     id: "tests",
     content: "Write comprehensive tests",
     status: "pending",
-    priority: "medium",
-    dependencies: ["api"]
+    priority: "medium"
   },
   {
     id: "docs",
     content: "Generate API documentation",
     status: "pending",
-    priority: "low",
-    dependencies: ["api"]
+    priority: "low"
   }
 ]);
 ```
@@ -296,14 +294,22 @@ claude> Implement quicksort similar to src/utils/sort.js
 
 ## Testing Best Practices
 
-### 1. Always Write Tests First (TDD)
+### 1. Test-First Development Workflows
 
 ```bash
-# Start with TDD mode
+# Method 1: Traditional TDD with claude-flow
 ./claude-flow sparc tdd "Shopping cart checkout"
 
-# Or manually
-claude> Write failing tests for checkout process, then implement
+# Method 2: Alternative Test-First Workflow
+claude> 1. Write comprehensive test suite for user authentication
+        2. Commit the tests
+        3. Implement code to make tests pass
+        4. Refactor while keeping tests green
+
+# This workflow ensures:
+# - Clear specifications before implementation
+# - Better test coverage
+# - Easier debugging when tests fail
 ```
 
 ### 2. Test Edge Cases
@@ -328,6 +334,82 @@ Memory.store("test/fixtures/users", [
 
 // Use in tests
 const testUsers = Memory.get("test/fixtures/users");
+```
+
+## Git Workflow Best Practices
+
+### 1. Use Git Worktrees for Parallel Development
+
+```bash
+# Create worktree for feature development
+git worktree add ../project-feature-auth feature/authentication
+
+# Benefits:
+# - Work on multiple branches simultaneously
+# - No need to stash/unstash changes
+# - Faster context switching
+# - Parallel testing of different approaches
+
+# Example workflow
+claude> Create git worktree for feature/payment-integration
+        Implement Stripe integration in the worktree
+        Keep main branch clean for hotfixes
+```
+
+### 2. Commit Strategies
+
+```bash
+# Atomic commits with clear messages
+git add -p  # Stage changes interactively
+git commit -m "feat: add user authentication with JWT"
+
+# Use conventional commits
+# feat: new feature
+# fix: bug fix
+# docs: documentation changes
+# style: formatting changes
+# refactor: code restructuring
+# test: test additions/changes
+# chore: maintenance tasks
+```
+
+## Visual Development Best Practices
+
+### 1. Screenshot-Driven UI Development
+
+```bash
+# Provide visual feedback for UI changes
+claude> Take a screenshot of the current dashboard
+        Implement the new sidebar navigation
+        Take another screenshot to show the changes
+        Iterate based on visual feedback
+
+# Benefits:
+# - Immediate visual validation
+# - Better communication of UI changes
+# - Easier to spot layout issues
+# - Documents the evolution of the UI
+```
+
+### 2. Use Visual Mockups
+
+```bash
+# Start with mockups
+claude> Here's a mockup of the desired layout [attach image]
+        Implement this design using React and Tailwind CSS
+        Show me the result with a screenshot
+```
+
+### 3. Iterative Visual Refinement
+
+```bash
+# Multiple rounds of visual feedback
+claude> Round 1: Basic layout implementation
+        [Screenshot]
+        Round 2: Add responsive design
+        [Screenshot]
+        Round 3: Polish animations and transitions
+        [Screenshot]
 ```
 
 ## Security Best Practices

@@ -63,11 +63,13 @@ Edit `.mcp.json` directly in your project root:
 }
 ```
 
-### Method 2: CLI Configuration
+### Method 2: CLI Configuration (Claude-Flow)
+
+> **Note**: The `claude mcp` commands shown below are actually claude-flow commands. Use `./claude-flow mcp` instead.
 
 ```bash
-# Add project-scoped server
-claude mcp add my-server -s project -- npx "@myorg/mcp-server"
+# Add project-scoped server (claude-flow)
+./claude-flow mcp add my-server -s project -- npx "@myorg/mcp-server"
 
 # Add user-scoped server (available in all projects)
 claude mcp add my-server -s user -- npx "@myorg/mcp-server"
@@ -305,9 +307,11 @@ const transport = new StdioTransport();
 server.connect(transport);
 ```
 
-## Remote MCP Support
+## Remote MCP Support (Experimental/Unverified)
 
-Claude Code now supports remote MCP servers with OAuth:
+> **⚠️ Note**: Remote MCP server support with OAuth is not documented in official Anthropic documentation. This feature may be planned, experimental, or not yet available. Please verify availability before using.
+
+The following shows potential future support for remote MCP servers:
 
 ```bash
 # Connect to remote MCP server

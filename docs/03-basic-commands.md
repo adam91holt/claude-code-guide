@@ -4,7 +4,9 @@
 
 ---
 
-## Command Categories
+## Claude Code Commands (Within Desktop App)
+
+These commands are available when using Claude Code within the Claude desktop application.
 
 ### Session Management
 - `/help` - Show available commands
@@ -28,11 +30,21 @@
 - `Memory.store()` - Save persistent data
 - `Memory.get()` - Retrieve saved data
 
-### MCP Commands
-- `claude mcp add` - Add MCP server
-- `claude mcp list` - List servers
-- `claude mcp status` - Check server status
-- `claude mcp remove` - Remove server
+## Claude-Flow Commands (Separate Tool)
+
+These commands require claude-flow installation and are run in your terminal:
+
+### MCP Server Management
+- `./claude-flow mcp start` - Start MCP server
+- `./claude-flow mcp list` - List available MCP tools
+- `./claude-flow mcp status` - Check MCP server status
+- `./claude-flow mcp tools` - List available MCP tools
+
+### Other Claude-Flow Commands
+- `./claude-flow swarm` - Multi-agent orchestration
+- `./claude-flow sparc` - SPARC development modes
+- `./claude-flow memory` - Memory operations
+- `./claude-flow monitor` - System monitoring
 
 ---
 

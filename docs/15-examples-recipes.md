@@ -1,6 +1,6 @@
 # Examples & Recipes
 
-[← Back: Troubleshooting](14-troubleshooting.md) | [Main](../README.md)
+[← Back: Troubleshooting](14-troubleshooting.md) | [Main](../README.md) | [Next: API & SDK Reference →](16-api-sdk-reference.md)
 
 ---
 
@@ -598,4 +598,4 @@ For more examples, join the community and share your own recipes!
 
 ---
 
-[← Back: Troubleshooting](14-troubleshooting.md) | [Main](../README.md)
+[← Back: Troubleshooting](14-troubleshooting.md) | [Main](../README.md) | [Next: API & SDK Reference →](16-api-sdk-reference.md)

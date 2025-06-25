@@ -57,6 +57,7 @@ Claude Code represents a paradigm shift in AI-assisted development. As Anthropic
 - [Command Reference](docs/13-command-reference.md)
 - [Troubleshooting](docs/14-troubleshooting.md)
 - [Examples & Recipes](docs/15-examples-recipes.md)
+- [API & SDK Reference](docs/16-api-sdk-reference.md)
 
 ## 💰 Pricing
 
@@ -69,10 +70,11 @@ Claude Code represents a paradigm shift in AI-assisted development. As Anthropic
 ## 🚀 Quick Start
 
 ```bash
-# Install Claude Code CLI
-npm install -g @anthropic/claude-cli
+# Primary: Claude Desktop App
+# Download from: https://claude.ai/download
+# Claude Code is built-in, no separate installation needed
 
-# Initialize with Claude-Flow
+# Optional: Enhanced features with Claude-Flow
 git clone https://github.com/ruvnet/claude-code-flow
 cd claude-code-flow
 ./claude-flow init --sparc
@@ -102,8 +104,10 @@ The screenshot above shows Claude Code orchestrating multiple agents to create t
 - **Real-time execution** with Bash commands and specialized agents
 
 ### 🧠 Extended Thinking Modes
+> **Note**: These trigger phrases are experimental and not confirmed by official documentation.
+
 ```bash
-# Progressive thinking levels
+# Progressive thinking levels (experimental)
 "think about this problem"        # Basic reasoning
 "think hard about this"          # Extended computation
 "think harder about this"        # Deep analysis
