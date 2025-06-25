@@ -336,8 +336,7 @@ stages:
 claude-review:
   stage: review
   script:
-    - git clone https://github.com/ruvnet/claude-code-flow
-    - cd claude-code-flow && npm install
+    - npm install -g claude-flow
     - |
       for file in $(git diff --name-only $CI_MERGE_REQUEST_TARGET_BRANCH_NAME); do
         if [[ $file == *.py ]]; then

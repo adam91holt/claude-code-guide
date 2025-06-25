@@ -89,9 +89,7 @@ export ANTHROPIC_API_KEY="sk-ant-api03-..."
 claude
 
 # Optional: Enhanced features with Claude-Flow
-git clone https://github.com/ruvnet/claude-code-flow
-cd claude-code-flow
-./claude-flow init --sparc
+npx claude-flow@latest init --sparc
 
 # Your first swarm command
 ./claude-flow swarm "Build a REST API with authentication" \

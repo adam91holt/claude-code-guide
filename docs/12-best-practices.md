@@ -6,11 +6,18 @@
 
 ## Overview
 
-This guide consolidates best practices learned from thousands of Claude Code sessions. Following these practices will maximize efficiency, minimize costs, and produce higher quality results.
+This guide consolidates best practices from Anthropic's official Claude Code engineering team and thousands of community sessions. Following these practices will maximize efficiency, minimize costs, and produce higher quality results.
+
+**Key Principles from Anthropic:**
+- Claude Code is intentionally low-level and unopinionated
+- Provides close to raw model access without forcing specific workflows
+- Designed to be a flexible, customizable, scriptable, and safe power tool
 
 ## Project Setup
 
 ### 1. Always Create CLAUDE.md
+
+**Essential for every project** - Anthropic strongly recommends CLAUDE.md as central documentation for project configuration.
 
 Every project should have a `CLAUDE.md` file documenting:
 
@@ -49,9 +56,16 @@ Every project should have a `CLAUDE.md` file documenting:
 - Redis for caching
 - Deployed on AWS ECS
 - API follows REST conventions
+
+## Unexpected Project Behaviors
+- Document any quirks or non-standard behaviors
+- Include workarounds for known issues
+- List dependencies with specific version requirements
 ```
 
 ### 2. Configure Permissions Properly
+
+**Anthropic Recommendation:** Start with conservative permissions and expand as needed.
 
 Create `.claude/settings.json`:
 
@@ -296,20 +310,32 @@ claude> Implement quicksort similar to src/utils/sort.js
 
 ### 1. Test-First Development Workflows
 
+**Anthropic's Recommended TDD Approach** - Particularly effective for changes easily verifiable with tests.
+
 ```bash
 # Method 1: Traditional TDD with claude-flow
 ./claude-flow sparc tdd "Shopping cart checkout"
 
-# Method 2: Alternative Test-First Workflow
+# Method 2: Alternative Test-First Workflow (Anthropic Preferred)
 claude> 1. Write comprehensive test suite for user authentication
-        2. Commit the tests
-        3. Implement code to make tests pass
+        2. Commit the failing tests first
+        3. Implement minimal code to make tests pass
         4. Refactor while keeping tests green
+        5. Commit incremental improvements
 
-# This workflow ensures:
+# Method 3: Explore-Plan-Code-Commit (Anthropic's Core Workflow)
+claude> 1. Read relevant files and understand context
+        2. Use think modes for deeper analysis
+        3. Create detailed implementation plan
+        4. Write code following the plan
+        5. Commit changes with clear messages
+
+# Benefits of Test-First approach:
 # - Clear specifications before implementation
 # - Better test coverage
 # - Easier debugging when tests fail
+# - Forces thinking about edge cases early
+# - Provides immediate feedback on implementation
 ```
 
 ### 2. Test Edge Cases
@@ -340,6 +366,8 @@ const testUsers = Memory.get("test/fixtures/users");
 
 ### 1. Use Git Worktrees for Parallel Development
 
+**Anthropic's Advanced Multi-Claude Strategy** - Use git worktrees to run multiple Claude instances simultaneously on different branches.
+
 ```bash
 # Create worktree for feature development
 git worktree add ../project-feature-auth feature/authentication
@@ -349,11 +377,20 @@ git worktree add ../project-feature-auth feature/authentication
 # - No need to stash/unstash changes
 # - Faster context switching
 # - Parallel testing of different approaches
+# - Multiple Claude instances can work on different features
 
-# Example workflow
+# Advanced Multi-Claude workflow
+# Terminal 1: Main development
 claude> Create git worktree for feature/payment-integration
         Implement Stripe integration in the worktree
         Keep main branch clean for hotfixes
+
+# Terminal 2: Parallel feature development
+cd ../project-feature-auth
+claude> Implement authentication system in this worktree
+
+# Terminal 3: Bug fixes on main branch
+claude> Fix critical bug on main branch while other features develop
 ```
 
 ### 2. Commit Strategies
@@ -377,18 +414,30 @@ git commit -m "feat: add user authentication with JWT"
 
 ### 1. Screenshot-Driven UI Development
 
+**Anthropic's Visual Iteration Approach** - Essential for effective UI development.
+
 ```bash
-# Provide visual feedback for UI changes
+# Visual iteration workflow (Anthropic recommended)
+# Step 1: Capture current state
 claude> Take a screenshot of the current dashboard
-        Implement the new sidebar navigation
-        Take another screenshot to show the changes
-        Iterate based on visual feedback
+
+# Step 2: Implement changes
+claude> Implement the new sidebar navigation
+
+# Step 3: Visual validation
+claude> Take another screenshot to show the changes
+        Compare with the previous version
+
+# Step 4: Iterate based on feedback
+claude> Adjust spacing and colors based on visual comparison
+        Take final screenshot to confirm improvements
 
 # Benefits:
 # - Immediate visual validation
 # - Better communication of UI changes
 # - Easier to spot layout issues
 # - Documents the evolution of the UI
+# - Reduces back-and-forth iterations
 ```
 
 ### 2. Use Visual Mockups

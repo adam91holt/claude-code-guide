@@ -9,14 +9,14 @@
 ### 1. Basic Interactive Mode
 
 ```bash
-# Start Claude Code
-claude
+# Start Claude Code through desktop app
+# No command line required - use the desktop interface
 
-# You'll see the prompt:
-claude> 
+# Or if using command line integration:
+# (Actual command may vary based on desktop app implementation)
 
-# Try your first command
-claude> Create a simple Python function that calculates fibonacci numbers
+# Try your first request:
+# "Create a simple Python function that calculates fibonacci numbers"
 
 # Claude will generate the code and ask for confirmation before writing files
 ```
@@ -29,8 +29,8 @@ Let's create a simple Node.js API:
 # Create project directory
 mkdir my-first-api && cd my-first-api
 
-# Initialize with Claude-Flow
-claude-flow init
+# Initialize with Claude-Flow (using NPX)
+npx claude-flow@latest init --sparc
 
 # Start interactive session with UI
 ./claude-flow start --ui --port 3000
@@ -170,26 +170,26 @@ claude> Review the changes in PR #123 focusing on performance and security
 ### Quick MCP Setup
 
 ```bash
-# Add a filesystem MCP server
-claude mcp add fs -s project -- npx mcp-server-filesystem --root ./
+# Add a filesystem MCP server (claude-flow command)
+./claude-flow mcp add fs -s project -- npx mcp-server-filesystem --root ./
 
-# Verify it's working
-claude mcp list
+# Verify it's working (claude-flow command)
+./claude-flow mcp list
 
 # Use it in Claude
-claude> Read all JavaScript files in the src directory using the fs MCP server
+# "Read all JavaScript files in the src directory using the fs MCP server"
 ```
 
 ### Database Integration
 
 ```bash
-# Add PostgreSQL MCP server
-claude mcp add db \
+# Add PostgreSQL MCP server (claude-flow command)
+./claude-flow mcp add db \
   -e DATABASE_URL=postgresql://localhost/myapp \
   -- npx mcp-server-postgres
 
 # Now Claude can query your database
-claude> Show me all users created in the last 24 hours
+# "Show me all users created in the last 24 hours"
 ```
 
 ## Quick Tips

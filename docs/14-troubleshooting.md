@@ -553,9 +553,8 @@ jobs:
           curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
           sudo apt-get install -y nodejs
           
-          # Install claude-flow
-          git clone https://github.com/ruvnet/claude-code-flow
-          cd claude-code-flow && npm install
+          # Install claude-flow with NPX
+          npx claude-flow@latest init --sparc
           
       # Set environment
       - name: Configure Claude
@@ -575,10 +574,9 @@ FROM node:18-alpine
 # Install dependencies
 RUN apk add --no-cache git python3 make g++
 
-# Install claude-flow
+# Install claude-flow with NPX
 WORKDIR /app
-RUN git clone https://github.com/ruvnet/claude-code-flow .
-RUN npm install
+RUN npm install -g claude-flow
 
 # Copy project
 COPY . /project

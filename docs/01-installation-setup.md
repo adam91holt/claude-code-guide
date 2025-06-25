@@ -23,75 +23,77 @@
 
 ## Installation Methods
 
-### Method 1: Official Installation (Primary Method)
+### Method 1: Desktop App Installation (Primary Method)
 
-> **⚠️ Note**: Claude Code installation methods may vary. Check official Anthropic documentation for current installation instructions.
+**Claude Code runs within the Anthropic Claude Desktop Application:**
+
+1. **Download Claude Desktop App**:
+   - Visit [claude.ai](https://claude.ai)
+   - Download the desktop application for your platform
+   - Install and sign in with your Anthropic account
+
+2. **Access Claude Code**:
+   - Claude Code is integrated within the desktop app
+   - Authentication is handled automatically through your account
+   - No separate CLI installation required
 
 ```bash
-# Installation method varies by platform and availability
-# Check: https://docs.anthropic.com/claude-code
+# Claude Code runs within the desktop app
+# No separate installation needed
 
-# Verify installation (command may vary)
-claude-code --version
-# OR
-claude --version
-
-# Start interactive session
-claude-code
-# OR  
-claude
+# Access through:
+# - Desktop application interface
+# - Integrated terminal within the app
 ```
 
-### Method 2: Claude-Flow Enhanced Installation
+### Method 2: Claude-Flow Enhanced Installation (Separate Tool)
 
 For the complete development environment with multi-agent orchestration:
 
 ```bash
-# Clone Claude-Flow repository
-git clone https://github.com/ruvnet/claude-code-flow
-cd claude-code-flow
+# Quick start with NPX (recommended)
+npx claude-flow@latest init --sparc
 
-# Install dependencies
-npm install
-
-# Initialize SPARC development environment
-./claude-flow init --sparc
+# OR global installation
+npm install -g claude-flow
+claude-flow init --sparc
 
 # Verify installation
-./claude-flow --version
+claude-flow --version
 ```
 
 
 ## Authentication
 
-### API Key Authentication (Primary Method)
+### Desktop App Authentication (Primary Method)
 
-Claude Code requires an Anthropic API key:
+**Claude Code authentication is handled through the desktop app:**
 
-```bash
-# Method 1: Environment variable (recommended)
-export ANTHROPIC_API_KEY="sk-ant-api03-..."
+1. **Sign in to Desktop App**:
+   - Launch Claude Desktop Application
+   - Sign in with your Anthropic account
+   - Authentication is managed automatically
 
-# Method 2: Configuration (command may vary)
-claude config set api-key sk-ant-api03-...
-# OR
-claude-code config set api-key sk-ant-api03-...
+2. **API Key Setup (Optional)**:
+   ```bash
+   # For advanced integrations, you may set API key
+   export ANTHROPIC_API_KEY="sk-ant-api03-..."
+   ```
 
-# Verify configuration
-claude config get api-key
-```
+3. **Verification**:
+   - Claude Code access is confirmed through desktop app functionality
+   - No separate authentication commands needed
 
-### Subscription Integration (If Available)
+### Subscription Integration
 
-Some versions may support subscription integration:
+**Claude Code usage is tied to your Anthropic subscription:**
 
-```bash
-# Check if subscription auth is available
-claude config --help
+- **Free Plan**: Limited Claude Code access
+- **Pro Plan**: Enhanced access with higher limits
+- **Team Plan**: Team features and collaboration
+- **Enterprise**: Advanced features and custom limits
 
-# Look for subscription-related options
-# Implementation varies by version
-```
+Subscription benefits are automatically applied through the desktop app.
 
 ### Get Your API Key
 
