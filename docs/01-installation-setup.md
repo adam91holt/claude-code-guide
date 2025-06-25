@@ -13,26 +13,32 @@
 
 ## Version Compatibility
 
-| Claude Version | Desktop App | Claude-Flow | MCP Support | SPARC Modes |
-|----------------|-------------|-------------|-------------|-------------|
-| **Latest (2025)** | ✅ Built-in | ✅ v1.0+ | ✅ Full | ✅ v1.0+ |
-| **Pro Plan** | ✅ Sonnet 4 only | ✅ Limited | ✅ Full | ✅ Limited |
-| **Max Plan** | ✅ All models | ✅ Full | ✅ Full | ✅ Full |
+| Component | Latest Version | MCP Support | Notes |
+|-----------|----------------|-------------|-------|
+| **Claude Code CLI** | Latest | ✅ Full | Standalone NPM package |
+| **Claude-Flow** | v1.0+ | ✅ Full | Separate enhancement tool |
+| **API Access** | Current | ✅ Full | Requires API key |
 
-**Note**: Features and availability may vary by subscription tier and region.
+**Note**: Features depend on your Anthropic API subscription tier.
 
 ## Installation Methods
 
-### Method 1: NPM Global Installation (Primary Method)
+### Method 1: Official Installation (Primary Method)
+
+> **⚠️ Note**: Claude Code installation methods may vary. Check official Anthropic documentation for current installation instructions.
 
 ```bash
-# Install Claude Code CLI globally
-npm install -g @anthropic-ai/claude-code
+# Installation method varies by platform and availability
+# Check: https://docs.anthropic.com/claude-code
 
-# Verify installation
+# Verify installation (command may vary)
+claude-code --version
+# OR
 claude --version
 
 # Start interactive session
+claude-code
+# OR  
 claude
 ```
 
@@ -55,34 +61,36 @@ npm install
 ./claude-flow --version
 ```
 
-### Method 3: Docker Installation (Advanced)
-
-```bash
-# Using official Docker setup
-docker run -it \
-  -v $(pwd):/workspace \
-  -e ANTHROPIC_API_KEY="your-api-key" \
-  node:18-alpine sh -c "npm install -g @anthropic-ai/claude-code && claude"
-```
 
 ## Authentication
 
-### API Key Setup (Required)
+### API Key Authentication (Primary Method)
 
-Claude Code requires an Anthropic API key for authentication:
+Claude Code requires an Anthropic API key:
 
 ```bash
 # Method 1: Environment variable (recommended)
 export ANTHROPIC_API_KEY="sk-ant-api03-..."
 
-# Method 2: Configuration file
-echo "sk-ant-api03-..." > ~/.anthropic/api_key
+# Method 2: Configuration (command may vary)
+claude config set api-key sk-ant-api03-...
+# OR
+claude-code config set api-key sk-ant-api03-...
 
-# Method 3: Interactive setup
-claude auth
+# Verify configuration
+claude config get api-key
+```
 
-# Verify authentication
-claude auth status
+### Subscription Integration (If Available)
+
+Some versions may support subscription integration:
+
+```bash
+# Check if subscription auth is available
+claude config --help
+
+# Look for subscription-related options
+# Implementation varies by version
 ```
 
 ### Get Your API Key
@@ -93,14 +101,13 @@ claude auth status
 4. Create a new API key
 5. Copy the key (starts with `sk-ant-api03-`)
 
-### Subscription Requirements
+### Subscription Benefits
 
-| Feature | Free Tier | Pro ($20/mo) | Enterprise |
-|---------|-----------|-------------|------------|
-| Basic Commands | ✅ | ✅ | ✅ |
-| File Operations | ✅ | ✅ | ✅ |
-| Advanced Models | ❌ | ✅ Sonnet | ✅ All Models |
-| High Usage | ❌ | ✅ | ✅ Unlimited |
+| Plan | Authentication | Model Access | Rate Limits |
+|------|----------------|--------------|-------------|
+| **Max Plan** | Subscription + API | All models | Highest |
+| **Pro Plan** | Subscription + API | Sonnet models | Standard |
+| **API Only** | API key required | Based on API tier | API limits |
 
 ## Initial Configuration
 
@@ -230,33 +237,6 @@ CLAUDE_PARALLEL_REQUESTS=5
 CLAUDE_RETRY_ATTEMPTS=3
 ```
 
-## VS Code Integration
-
-### Install Extension
-
-```bash
-# Install from VS Code marketplace
-code --install-extension anthropic.claude-code
-```
-
-### Configure Extension
-
-In VS Code settings (`settings.json`):
-
-```json
-{
-  "claude-code.apiKey": "${env:ANTHROPIC_API_KEY}",
-  "claude-code.model": "opus-4",
-  "claude-code.autoComplete": true,
-  "claude-code.showThinkingProcess": true,
-  "claude-code.mcpServers": {
-    "workspace": {
-      "command": "mcp-server-filesystem",
-      "args": ["--root", "${workspaceFolder}"]
-    }
-  }
-}
-```
 
 ## Verify Installation
 
@@ -311,8 +291,11 @@ claude
 3. **Authentication Failed**
    ```bash
    # Clear credentials and re-authenticate
-   claude auth logout
-   claude auth login --subscription
+   rm -rf ~/.anthropic
+   claude auth
+   
+   # Or use environment variable
+   export ANTHROPIC_API_KEY="sk-ant-api03-..."
    ```
 
 4. **MCP Connection Issues**

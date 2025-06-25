@@ -63,11 +63,14 @@ Claude Code is Anthropic's official CLI tool for AI-assisted development. This s
 
 Claude Code uses the Anthropic API pricing model:
 
-| Plan | Price | API Usage | Model Access | Best For |
-|------|-------|-----------|--------------|----------|
-| **Free Tier** | $0 | Limited monthly credits | Sonnet models | Testing & learning |
-| **Pro** | $20/mo | Higher rate limits | Sonnet 4 | Small projects |
-| **Max** | Varies | Enterprise limits | All models | Production use |
+| Plan | Price | Usage Limit | Model Access | Best For |
+|------|-------|-------------|--------------|----------|
+| **Free** | $0 | ~20 messages/day | Limited access | Testing |
+| **Pro** | $20/mo | ~45 messages/5hr | Sonnet models | Individual use |
+| **Max 5x** | $100/mo | ~225 messages/5hr | All models | Power users |
+| **Max 20x** | $200/mo | ~900 messages/5hr | All models | Heavy usage |
+| **Team** | $25-30/mo/user | Team features | All models | Teams |
+| **Enterprise** | Custom | Custom quotas | All models | Large orgs |
 
 **API Token Pricing:**
 - **Sonnet 4**: $3/1M input tokens, $15/1M output tokens

@@ -143,12 +143,14 @@ claude> Update user preferences for user ID 123
 
 ### 3. API Integration Servers
 
-#### REST API Server
+#### REST API Server (Conceptual)
+> **⚠️ Note**: No official REST MCP server exists. This is a conceptual example.
+
 ```json
 {
   "api": {
     "type": "stdio",
-    "command": "mcp-server-rest",
+    "command": "your-custom-rest-server",
     "args": ["--base-url", "https://api.example.com"],
     "env": {
       "API_TOKEN": "${API_TOKEN}"
@@ -157,14 +159,17 @@ claude> Update user preferences for user ID 123
 }
 ```
 
-#### GraphQL Server
+#### GraphQL Server (Community)
+> **⚠️ Note**: Check npm for available GraphQL MCP servers like `@apollographql/apollo-mcp-server`.
+
 ```json
 {
   "graphql": {
     "type": "stdio",
-    "command": "mcp-server-graphql",
-    "args": ["--endpoint", "https://api.example.com/graphql"],
+    "command": "npx",
+    "args": ["-y", "@apollographql/apollo-mcp-server"],
     "env": {
+      "GRAPHQL_ENDPOINT": "https://api.example.com/graphql",
       "AUTH_HEADER": "Bearer ${GRAPHQL_TOKEN}"
     }
   }
@@ -173,23 +178,30 @@ claude> Update user preferences for user ID 123
 
 ### 4. Development Tool Servers
 
-#### Git Server
+#### Git Server (Community)
+> **⚠️ Note**: Check npm for Git MCP servers like `@idosal/git-mcp`.
+
 ```json
 {
   "git": {
     "type": "stdio",
-    "command": "mcp-server-git",
-    "args": ["--repo", "./"]
+    "command": "npx",
+    "args": ["-y", "@idosal/git-mcp"],
+    "env": {
+      "GIT_REPO_PATH": "./"
+    }
   }
 }
 ```
 
-#### Docker Server
+#### Docker Server (Conceptual)
+> **⚠️ Note**: No official Docker MCP server exists. Custom implementation required.
+
 ```json
 {
   "docker": {
     "type": "stdio",
-    "command": "mcp-server-docker",
+    "command": "your-docker-mcp-server",
     "args": ["--socket", "/var/run/docker.sock"]
   }
 }
@@ -307,9 +319,9 @@ const transport = new StdioTransport();
 server.connect(transport);
 ```
 
-## Remote MCP Support (Experimental/Unverified)
+## Remote MCP Support (Official Beta)
 
-> **⚠️ Note**: Remote MCP server support with OAuth is not documented in official Anthropic documentation. This feature may be planned, experimental, or not yet available. Please verify availability before using.
+> **✅ Status**: Remote MCP support is officially available in beta for Claude Pro, Max, Team, and Enterprise plans with OAuth 2.1 authentication.
 
 The following shows potential future support for remote MCP servers:
 

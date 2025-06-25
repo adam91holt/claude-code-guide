@@ -23,11 +23,13 @@ Effective cost management is crucial when using Claude Code at scale. This guide
 
 ### Plan Limits
 
-| Plan | Price | 5-Hour Window | Daily Average | Best Model |
-|------|-------|---------------|---------------|------------|
-| **Pro** | $20/mo | 10-40 prompts | ~50-200 prompts | Sonnet 4 |
-| **Max 5x** | $100/mo | 50-200 prompts | ~250-1,000 prompts | Both |
-| **Max 20x** | $200/mo | 200-800 prompts | ~1,000-4,000 prompts | Both |
+| Plan | Price | 5-Hour Window | Daily Average | Model Access |
+|------|-------|---------------|---------------|-------------|
+| **Free** | $0 | Limited | ~20 messages/day | Restricted |
+| **Pro** | $20/mo | ~45 messages | Variable | Sonnet models |
+| **Max 5x** | $100/mo | ~225 messages | 5x Pro | All models |
+| **Max 20x** | $200/mo | ~900 messages | 20x Pro | All models |
+| **Team** | $25-30/mo/user | Team limits | Team features | All models |
 | **Enterprise** | Custom | Unlimited* | Custom quotas | All models + priority |
 
 *Enterprise plans include custom rate limits, dedicated infrastructure, and volume discounts. Contact Anthropic sales for pricing.

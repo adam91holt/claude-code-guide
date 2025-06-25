@@ -22,11 +22,11 @@ Error: Authentication failed. Please check your credentials.
    # Verify environment variable
    echo $ANTHROPIC_API_KEY
    
-   # Re-authenticate interactively
-   claude auth
-   
-   # Or set environment variable
+   # Set environment variable
    export ANTHROPIC_API_KEY="sk-ant-api03-..."
+   
+   # Or use config command (if available)
+   claude config set api-key sk-ant-api03-...
    ```
 
 2. **API Key Format Check**
@@ -36,16 +36,20 @@ Error: Authentication failed. Please check your credentials.
    
    # Get new key from: https://console.anthropic.com/
    export ANTHROPIC_API_KEY="sk-ant-api03-..."
-   claude auth status
+   
+   # Verify configuration (command may vary)
+   claude config get api-key
    ```
 
-3. **Clear Authentication Cache**
+3. **Clear Configuration Cache**
    ```bash
-   # Clear cached credentials
-   rm -rf ~/.anthropic
+   # Clear cached config (location may vary)
+   rm -rf ~/.config/claude-code
+   # OR
+   rm -rf ~/.claude
    
-   # Re-authenticate
-   claude auth
+   # Reset configuration
+   claude config reset
    ```
 
 #### Problem: "Invalid API key format"
@@ -449,19 +453,20 @@ grep -i error ~/.claude/logs/*.log
 
 # Backup current state
 mkdir -p ~/claude-backup
-cp -r ~/.claude ~/claude-backup/
-cp -r ./.claude ~/claude-backup/project-claude
+cp -r ~/.claude ~/claude-backup/ 2>/dev/null || true
+cp -r ./.claude ~/claude-backup/project-claude 2>/dev/null || true
 
-# Reset Claude
-rm -rf ~/.claude
-rm -rf ./.claude
+# Reset configuration
+rm -rf ~/.claude 2>/dev/null || true
+rm -rf ./.claude 2>/dev/null || true
+rm -rf ~/.config/claude-code 2>/dev/null || true
 
-# Reinstall
-npm uninstall -g @anthropic/claude-cli
-npm install -g @anthropic/claude-cli
+# Note: Reinstallation method varies by Claude Code version
+# Check official documentation for current installation method
 
-# Re-authenticate
-claude auth login
+# Reset API key
+export ANTHROPIC_API_KEY="your-new-api-key"
+claude config set api-key "your-new-api-key"
 
 echo "Claude Code reset complete"
 ```
@@ -510,9 +515,9 @@ rm -rf ~/.claude/sessions
 ./claude-flow memory cleanup --force
 ./claude-flow memory init
 
-# Use namespaced keys
-Memory.store("swarm/agent1/data", data)  # Good
-Memory.store("data", data)  # Bad - may conflict
+# Use namespaced keys (claude-flow)
+./claude-flow memory store "swarm/agent1/data" "data"  # Good
+./claude-flow memory store "data" "data"  # Bad - may conflict
 ```
 
 ### Problem: Swarm Deadlock
@@ -599,46 +604,50 @@ script:
   - ./claude-flow sparc "Deploy application"
 ```
 
-## Common Error Codes
+## Common Error Codes (Conceptual)
+
+> **⚠️ Note**: The error codes below are conceptual examples. Actual Claude Code error codes and messages may vary.
 
 ### Authentication Errors
 
-| Error Code | Description | Solution |
-|------------|-------------|----------|
-| `AUTH_001` | Invalid API key format | Ensure key starts with `sk-ant-` |
-| `AUTH_002` | API key expired | Regenerate API key in console |
-| `AUTH_003` | Insufficient permissions | Upgrade subscription or check scopes |
-| `AUTH_004` | Rate limit exceeded | Wait or upgrade plan |
-| `AUTH_005` | Account suspended | Contact Anthropic support |
+| Issue Type | Common Causes | Solutions |
+|------------|---------------|-----------|
+| Invalid API key | Wrong format or typos | Verify key starts with `sk-ant-api03-` |
+| Authentication failed | Expired or invalid key | Get new key from console.anthropic.com |
+| Permission denied | Insufficient plan access | Check subscription tier |
+| Rate limiting | Too many requests | Wait or upgrade plan |
+| Account issues | Suspended account | Contact Anthropic support |
 
-### MCP Errors
+### MCP Issues (Claude Code)
 
-| Error Code | Description | Solution |
-|------------|-------------|----------|
-| `MCP_001` | Server connection failed | Check server installation and config |
-| `MCP_002` | Server timeout | Increase timeout or check server health |
-| `MCP_003` | Invalid server configuration | Validate `.mcp.json` syntax |
-| `MCP_004` | Server crashed | Check server logs and restart |
-| `MCP_005` | Permission denied | Check file/directory permissions |
+| Issue Type | Common Causes | Solutions |
+|------------|---------------|----------|
+| Connection failed | Server not running | Check MCP server installation |
+| Server timeout | Slow server response | Increase timeout in config |
+| Invalid config | Syntax errors | Validate `.mcp.json` syntax |
+| Server crashed | Server errors | Check server logs and restart |
+| Permission denied | File access issues | Check file/directory permissions |
 
-### Memory Errors
+### Memory Issues (Claude-Flow)
 
-| Error Code | Description | Solution |
-|------------|-------------|----------|
-| `MEM_001` | Memory quota exceeded | Clean up old entries or upgrade plan |
-| `MEM_002` | Invalid memory key | Use valid key format (alphanumeric + `/`) |
-| `MEM_003` | Memory corruption | Export data and reset memory |
-| `MEM_004` | Concurrent access error | Retry operation |
+> **Note**: Memory errors apply to claude-flow, not native Claude Code.
 
-### Swarm Coordination Errors
+| Issue Type | Common Causes | Solutions |
+|------------|---------------|----------|
+| Storage full | Too much stored data | Clean up with `./claude-flow memory cleanup` |
+| Invalid key | Wrong key format | Use alphanumeric + `/` format |
+| Data corruption | System crashes | Export data and reset memory |
+| Access conflicts | Concurrent operations | Retry operation |
 
-| Error Code | Description | Solution |
-|------------|-------------|----------|
-| `SWARM_001` | Agent spawn failed | Check system resources |
-| `SWARM_002` | Memory coordination failure | Reset swarm memory namespace |
-| `SWARM_003` | Agent deadlock | Kill deadlocked agents |
-| `SWARM_004` | Maximum agents exceeded | Reduce `--max-agents` to 10 or less |
-| `SWARM_005` | Strategy not found | Use valid strategy name |
+### Swarm Issues (Claude-Flow)
+
+| Issue Type | Common Causes | Solutions |
+|------------|---------------|----------|
+| Agent spawn failed | Insufficient resources | Check system memory/CPU |
+| Coordination failure | Memory issues | Reset with `./claude-flow memory cleanup` |
+| Agent deadlock | Circular dependencies | Kill deadlocked agents |
+| Too many agents | Exceeds 10 agent limit | Reduce `--max-agents` |
+| Unknown strategy | Invalid strategy name | Use: research, development, analysis, testing, optimization, maintenance |
 
 ## Getting Help
 

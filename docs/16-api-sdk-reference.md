@@ -58,110 +58,76 @@ const message = await anthropic.messages.create({
 console.log(message.content);
 ```
 
-## Claude-Flow API
+## Claude-Flow API (Conceptual)
 
-### REST API Endpoints
+> **⚠️ Important**: The claude-flow API endpoints described below are conceptual examples. Actual API availability and endpoints may vary by claude-flow version.
 
-Claude-Flow provides a REST API for orchestration:
+### Command Line Interface
+
+Claude-flow primarily operates through CLI commands:
 
 ```bash
-# Start API server
-./claude-flow start --api --port 8080
+# Swarm operations
+./claude-flow swarm "Build authentication system" --strategy development
 
-# Available endpoints:
-# POST /api/swarm        - Create swarm
-# GET  /api/swarm/:id    - Get swarm status
-# POST /api/sparc        - Execute SPARC mode
-# GET  /api/memory/:key  - Get memory
-# POST /api/memory       - Store memory
+# SPARC mode execution
+./claude-flow sparc run coder "Implement user auth"
+
+# Memory operations
+./claude-flow memory store "key" "data"
+./claude-flow memory get "key"
 ```
 
-### Swarm API
+### Programmatic Usage
 
-```javascript
-// Create a swarm via API
-const response = await fetch('http://localhost:8080/api/swarm', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer your-api-key'
-  },
-  body: JSON.stringify({
-    objective: "Build authentication system",
-    strategy: "development",
-    mode: "hierarchical",
-    maxAgents: 5,
-    parallel: true
-  })
-});
-
-const swarm = await response.json();
-console.log(`Swarm ID: ${swarm.id}`);
-
-// Monitor swarm progress
-const status = await fetch(`http://localhost:8080/api/swarm/${swarm.id}`);
-const progress = await status.json();
-```
-
-### SPARC API
+For programmatic integration, use subprocess calls:
 
 ```python
-# Execute SPARC mode via API
-import requests
+# Python example
+import subprocess
+import json
 
-response = requests.post('http://localhost:8080/api/sparc', json={
-    'mode': 'coder',
-    'objective': 'Implement user authentication',
-    'context': {
-        'framework': 'Express.js',
-        'database': 'PostgreSQL',
-        'requirements': ['JWT tokens', 'password hashing']
-    }
-})
+def run_claude_flow(command):
+    result = subprocess.run(
+        ['./claude-flow'] + command.split(),
+        capture_output=True,
+        text=True
+    )
+    return result.stdout
 
-result = response.json()
-print(f"Task ID: {result['taskId']}")
+# Execute swarm
+result = run_claude_flow('swarm "Build API" --strategy development')
+print(result)
 ```
-
-## Memory API
-
-### Storage Operations
 
 ```javascript
-// Store data in memory
-await fetch('http://localhost:8080/api/memory', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    key: 'project/api/endpoints',
-    data: {
-      endpoints: ['/auth', '/users', '/posts'],
-      version: '1.0.0',
-      timestamp: new Date().toISOString()
-    },
-    namespace: 'project-123'
-  })
-});
+// Node.js example
+const { spawn } = require('child_process');
 
-// Retrieve data
-const memory = await fetch('http://localhost:8080/api/memory/project/api/endpoints');
-const data = await memory.json();
-```
+function runClaudeFlow(command) {
+    return new Promise((resolve, reject) => {
+        const args = command.split(' ');
+        const child = spawn('./claude-flow', args);
+        
+        let output = '';
+        child.stdout.on('data', (data) => {
+            output += data.toString();
+        });
+        
+        child.on('close', (code) => {
+            if (code === 0) {
+                resolve(output);
+            } else {
+                reject(new Error(`Process exited with code ${code}`));
+            }
+        });
+    });
+}
 
-### Query Operations
-
-```python
-# Query memory with patterns
-import requests
-
-response = requests.get('http://localhost:8080/api/memory', params={
-    'pattern': 'project/*',
-    'namespace': 'project-123'
-})
-
-memories = response.json()
-for memory in memories:
-    print(f"{memory['key']}: {memory['data']}")
+// Usage
+runClaudeFlow('sparc run coder "Implement auth"')
+    .then(result => console.log(result))
+    .catch(error => console.error(error));
 ```
 
 ## MCP SDK Integration

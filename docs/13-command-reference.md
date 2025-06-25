@@ -8,20 +8,15 @@
 
 ### Session Management
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `/help` | Show all available commands | `/help` |
-| `/clear` | Clear conversation context | `/clear` |
-| `/exit` | Exit Claude Code | `/exit` |
-| `/context` | Show current context usage | `/context` |
-| `/model` | Show or switch model | `/model opus-4` |
-| `/permissions` | Configure tool permissions | `/permissions` |
-| `/settings` | Open settings configuration | `/settings` |
-| `/think` | Enable thinking mode | `/think hard` |
-| `/debug` | Enable debug mode | `/debug on` |
-| `/profile` | Show performance metrics | `/profile` |
-| `/memory` | Display memory usage | `/memory` |
-| `/tokens` | Show token count | `/tokens` |
+> **Note**: Many commands are theoretical. Claude Code's actual command set may be more limited.
+
+| Command | Description | Status |
+|---------|-------------|--------|
+| `/help` | Show available commands | Confirmed |
+| `/clear` | Clear conversation context | Likely exists |
+| `/exit` | Exit Claude Code | Likely exists (or Ctrl+D) |
+| `/context` | Show current context usage | Unconfirmed |
+| `/model` | Show or switch model | Unconfirmed |
 
 ### File Operations
 
@@ -44,18 +39,18 @@
 | `WebSearch` | Search the web | `WebSearch('React best practices')` |
 | `WebFetch` | Fetch and analyze URL | `WebFetch(url, prompt)` |
 
-### Memory Operations
+### Memory Operations (Claude-Flow Specific)
 
-| Operation | Description | Example |
-|-----------|-------------|---------|
-| `Memory.store()` | Save data | `Memory.store('key', data)` |
-| `Memory.get()` | Retrieve data | `Memory.get('key')` |
-| `Memory.query()` | Search by pattern | `Memory.query('project/*')` |
-| `Memory.list()` | List all keys | `Memory.list()` |
-| `Memory.delete()` | Delete entry | `Memory.delete('key')` |
-| `Memory.cleanup()` | Remove by pattern | `Memory.cleanup('temp/*')` |
-| `Memory.export()` | Export to file | `Memory.export('backup.json')` |
-| `Memory.import()` | Import from file | `Memory.import('backup.json')` |
+> **⚠️ Note**: Memory operations require claude-flow installation. These are not JavaScript APIs.
+
+| Operation | Description | Claude-Flow Command |
+|-----------|-------------|---------------------|
+| Store data | Save data | `./claude-flow memory store <key> <data>` |
+| Retrieve data | Get stored data | `./claude-flow memory get <key>` |
+| List entries | Show all keys | `./claude-flow memory list` |
+| Export data | Export to file | `./claude-flow memory export <file>` |
+| Import data | Import from file | `./claude-flow memory import <file>` |
+| Cleanup | Remove old entries | `./claude-flow memory cleanup` |
 
 ## Claude-Flow Commands
 
@@ -263,23 +258,19 @@
 claude --mcp-debug
 ```
 
-### Claude Integration
+### Claude Integration (Claude-Flow Specific)
+
+> **Note**: These commands are claude-flow specific, not native Claude Code.
 
 ```bash
-# Authentication
+# Authentication (claude-flow only)
 ./claude-flow claude auth
-  --subscription    # Use Claude subscription
-  --api-key <key>   # Use API key
-  --console         # Use console account
 
-# List models
+# List models (claude-flow only)
 ./claude-flow claude models
-  --available       # Only available models
 
-# Interactive chat
+# Interactive chat (claude-flow only) 
 ./claude-flow claude chat
-  --model <model>   # Model to use
-  --system <prompt> # System prompt
 ```
 
 ### Session Management
@@ -352,12 +343,14 @@ claude --mcp-debug
 
 ## Special Syntax
 
-### Think Modes
+### Think Modes (Unverified)
+> **⚠️ Warning**: These trigger phrases are not officially documented and may not work.
+
 ```
-think about <problem>        # Basic
-think hard about <problem>   # Extended
-think harder about <problem> # Deep
-ultrathink about <problem>   # Maximum
+think about <problem>        # Unverified
+think hard about <problem>   # Unverified  
+think harder about <problem> # Unverified
+ultrathink about <problem>   # Unverified
 ```
 
 ### Model Switching
