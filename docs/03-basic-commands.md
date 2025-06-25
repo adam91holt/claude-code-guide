@@ -4,31 +4,42 @@
 
 ---
 
-## Claude Code Commands (Within Desktop App)
+## Claude Code CLI Commands
 
-These commands are available when using Claude Code within the Claude desktop application.
+These commands are available in the Claude Code interactive terminal session.
 
 ### Session Management
-- `/help` - Show available commands
-- `/clear` - Clear conversation context
-- `/exit` or `Ctrl+D` - Exit Claude Code
-- `/context` - Show current context usage
-- `/model` - Show or switch AI model
+```bash
+# Start Claude Code
+claude
+
+# Within the session:
+/help          # Show available commands
+/clear         # Clear conversation context
+/exit          # Exit Claude Code (or Ctrl+D)
+/context       # Show current context usage
+/model         # Show or switch AI model
+```
 
 ### File Operations
-- `Read <file>` - Read file contents
-- `Write <file>` - Create or overwrite file
-- `Edit <file>` - Modify existing file
-- `MultiEdit <file>` - Make multiple edits
-- `Glob <pattern>` - Find files by pattern
-- `Grep <pattern>` - Search file contents
+```bash
+# Claude Code provides these tools automatically:
+Read <file>           # Read file contents
+Write <file>          # Create or overwrite file  
+Edit <file>           # Modify existing file
+MultiEdit <file>      # Make multiple edits
+Glob <pattern>        # Find files by pattern
+Grep <pattern>        # Search file contents
+```
 
 ### Development Tools
-- `Bash <command>` - Execute shell commands
-- `TodoWrite` - Manage task list
-- `TodoRead` - View current tasks
-- `Memory.store()` - Save persistent data
-- `Memory.get()` - Retrieve saved data
+```bash
+Bash <command>        # Execute shell commands
+TodoWrite             # Manage task list
+TodoRead              # View current tasks
+Memory.store()        # Save persistent data
+Memory.get()          # Retrieve saved data
+```
 
 ## Claude-Flow Commands (Separate Tool)
 

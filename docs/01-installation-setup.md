@@ -23,32 +23,20 @@
 
 ## Installation Methods
 
-### Method 1: Claude Desktop App (Primary Method)
+### Method 1: NPM Global Installation (Primary Method)
 
 ```bash
-# Download Claude desktop app from:
-# https://claude.ai/download
+# Install Claude Code CLI globally
+npm install -g @anthropic-ai/claude-code
 
-# Claude Code is built into the desktop app
-# No separate CLI installation needed
-
-# After installation, Claude Code commands are available
-# within Claude chat sessions
-```
-
-### Method 2: NPM Global Installation (Experimental)
-
-> **⚠️ Warning**: This method is experimental and the package `@anthropic/claude-cli` may not exist. The primary and recommended way to use Claude Code is through the Claude desktop app.
-
-```bash
-# Install Claude Code CLI globally (experimental - may not work)
-npm install -g @anthropic/claude-cli
-
-# Verify installation (if package exists)
+# Verify installation
 claude --version
+
+# Start interactive session
+claude
 ```
 
-### Method 3: Claude-Flow Enhanced Installation
+### Method 2: Claude-Flow Enhanced Installation
 
 For the complete development environment with multi-agent orchestration:
 
@@ -67,53 +55,52 @@ npm install
 ./claude-flow --version
 ```
 
-### Method 4: Docker Installation (Experimental)
-
-> **⚠️ Warning**: The Docker image `anthropic/claude-code:latest` availability is not confirmed by official sources. This method may not work.
+### Method 3: Docker Installation (Advanced)
 
 ```bash
-# Pull Claude Code image (experimental - may not exist)
-docker pull anthropic/claude-code:latest
-
-# Run with volume mounting (if image exists)
-docker run -it -v $(pwd):/workspace anthropic/claude-code
+# Using official Docker setup
+docker run -it \
+  -v $(pwd):/workspace \
+  -e ANTHROPIC_API_KEY="your-api-key" \
+  node:18-alpine sh -c "npm install -g @anthropic-ai/claude-code && claude"
 ```
 
 ## Authentication
 
-### Claude Desktop App Authentication
+### API Key Setup (Required)
+
+Claude Code requires an Anthropic API key for authentication:
 
 ```bash
-# Authentication is handled through the Claude desktop app
-# Simply sign in to your Claude account in the app
-# No separate CLI authentication needed
+# Method 1: Environment variable (recommended)
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
 
-# For Pro/Max features, ensure your subscription is active
-# in your Claude account settings
-```
+# Method 2: Configuration file
+echo "sk-ant-api03-..." > ~/.anthropic/api_key
 
-### API Key Authentication
-
-```bash
-# Set API key as environment variable
-export ANTHROPIC_API_KEY="sk-ant-..."
-
-# Or use auth command
-claude auth login --api-key sk-ant-...
+# Method 3: Interactive setup
+claude auth
 
 # Verify authentication
 claude auth status
 ```
 
-### Anthropic API Authentication (For API Access)
+### Get Your API Key
 
-```bash
-# For direct API usage (separate from Claude Code)
-# Set API key as environment variable
-export ANTHROPIC_API_KEY="sk-ant-..."
+1. Visit [Anthropic Console](https://console.anthropic.com/)
+2. Sign in to your account
+3. Navigate to API Keys section
+4. Create a new API key
+5. Copy the key (starts with `sk-ant-api03-`)
 
-# This is for API access, not Claude Code within the desktop app
-```
+### Subscription Requirements
+
+| Feature | Free Tier | Pro ($20/mo) | Enterprise |
+|---------|-----------|-------------|------------|
+| Basic Commands | ✅ | ✅ | ✅ |
+| File Operations | ✅ | ✅ | ✅ |
+| Advanced Models | ❌ | ✅ Sonnet | ✅ All Models |
+| High Usage | ❌ | ✅ | ✅ Unlimited |
 
 ## Initial Configuration
 
@@ -273,17 +260,34 @@ In VS Code settings (`settings.json`):
 
 ## Verify Installation
 
-Run the verification script:
+Verify Claude Code is working correctly:
 
 ```bash
-# Check all components
+# Check Claude Code installation
+claude --version
+
+# Test authentication
+claude auth status
+
+# Start interactive session (should prompt for first-time setup)
+claude
+
+# Within Claude session, test basic functionality:
+# > Read package.json
+# > Write hello.txt "Hello from Claude Code!"
+# > Bash ls -la
+```
+
+### Optional: Verify Claude-Flow Integration
+
+```bash
+# Check claude-flow if installed
 ./claude-flow doctor
 
 # Expected output:
-# ✓ Claude CLI installed
+# ✓ Claude Code CLI accessible
 # ✓ Authentication valid
 # ✓ MCP servers configured
-# ✓ Permissions set
 # ✓ Memory system initialized
 # ✓ All systems operational
 ```

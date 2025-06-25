@@ -22,27 +22,30 @@ Error: Authentication failed. Please check your credentials.
    # Verify environment variable
    echo $ANTHROPIC_API_KEY
    
-   # Re-authenticate
-   claude auth logout
-   claude auth login --api-key sk-ant-...
+   # Re-authenticate interactively
+   claude auth
+   
+   # Or set environment variable
+   export ANTHROPIC_API_KEY="sk-ant-api03-..."
    ```
 
-2. **Subscription Authentication**
+2. **API Key Format Check**
+   ```bash
+   # Ensure key uses correct format
+   # New format: sk-ant-api03-...
+   
+   # Get new key from: https://console.anthropic.com/
+   export ANTHROPIC_API_KEY="sk-ant-api03-..."
+   claude auth status
+   ```
+
+3. **Clear Authentication Cache**
    ```bash
    # Clear cached credentials
-   rm -rf ~/.claude/auth
+   rm -rf ~/.anthropic
    
-   # Re-login with subscription
-   claude auth login --subscription
-   ```
-
-3. **Token Expiry**
-   ```bash
-   # Check auth status
-   claude auth status
-   
-   # Refresh token
-   claude auth refresh
+   # Re-authenticate
+   claude auth
    ```
 
 #### Problem: "Invalid API key format"

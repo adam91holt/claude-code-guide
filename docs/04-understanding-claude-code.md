@@ -6,29 +6,30 @@
 
 ## What is Claude Code?
 
-Claude Code is Anthropic's official command-line interface that brings the power of Claude AI directly to your development environment. It's designed to be:
+Claude Code is Anthropic's official command-line interface that brings the power of Claude AI directly to your development environment. As a standalone NPM package (`@anthropic-ai/claude-code`), it's designed to be:
 
 - **Low-level and unopinionated**: Direct model access without imposed workflows
 - **Flexible**: Adapt to any development style or process
-- **Powerful**: Full access to Claude's capabilities
+- **Powerful**: Full access to Claude's capabilities via API
 - **Safe**: Built-in permission controls and safety features
+- **Standalone**: Runs independently in your terminal with API authentication
 
 ## Core Components
 
 ### 1. CLI Interface
-The command-line interface provides direct interaction with Claude models.
+Standalone command-line tool (`claude`) that provides direct interaction with Claude models via API.
 
-### 2. SDK Integration
-Programmatic access for automation and custom tools.
+### 2. API Authentication
+Uses Anthropic API keys for secure, direct access to Claude models.
 
-### 3. IDE Plugins
-Native integrations with VS Code, IntelliJ, and other major IDEs.
+### 3. File Operations
+Built-in tools for reading, writing, and editing files in your development environment.
 
 ### 4. MCP Protocol
-Universal connectivity to external tools and data sources.
+Universal connectivity to external tools and data sources through MCP servers.
 
 ### 5. Memory System
-Persistent knowledge storage across sessions.
+Persistent knowledge storage across sessions for maintaining context.
 
 ## Key Features
 

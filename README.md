@@ -21,7 +21,7 @@
 
 ## 🚀 Overview
 
-Claude Code represents a paradigm shift in AI-assisted development. As Anthropic's official command-line interface, it brings the power of Claude directly to your terminal, IDE, and development workflows. Combined with MCP (Model Context Protocol) servers, it creates an unprecedented development environment.
+Claude Code is Anthropic's official CLI tool for AI-assisted development. This standalone command-line interface brings Claude's capabilities directly to your terminal and development workflows. Combined with MCP (Model Context Protocol) servers, it creates a powerful AI-enhanced coding environment.
 
 ### Why Claude Code + MCP?
 
@@ -61,26 +61,34 @@ Claude Code represents a paradigm shift in AI-assisted development. As Anthropic
 
 ## 💰 Pricing
 
-| Plan | Price | Usage Limits | Model Access | Best For |
-|------|-------|--------------|--------------|----------|
-| **Pro** | $20/mo | 10-40 prompts/5hrs | Sonnet 4 only | Small projects |
-| **Max (5x)** | $100/mo | 5x Pro capacity | Sonnet 4 + Opus 4 | Regular development |
-| **Max (20x)** | $200/mo | 200-800 prompts/5hrs | Full access + priority | Power users |
+Claude Code uses the Anthropic API pricing model:
+
+| Plan | Price | API Usage | Model Access | Best For |
+|------|-------|-----------|--------------|----------|
+| **Free Tier** | $0 | Limited monthly credits | Sonnet models | Testing & learning |
+| **Pro** | $20/mo | Higher rate limits | Sonnet 4 | Small projects |
+| **Max** | Varies | Enterprise limits | All models | Production use |
+
+**API Token Pricing:**
+- **Sonnet 4**: $3/1M input tokens, $15/1M output tokens
+- **Opus 4**: $15/1M input tokens, $75/1M output tokens
 
 ## 🚀 Quick Start
 
 ```bash
-# Primary: Claude Desktop App
-# Download from: https://claude.ai/download
-# Claude Code is built-in, no separate installation needed
+# Install Claude Code CLI
+npm install -g @anthropic-ai/claude-code
+
+# Set up authentication
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+
+# Start interactive session
+claude
 
 # Optional: Enhanced features with Claude-Flow
 git clone https://github.com/ruvnet/claude-code-flow
 cd claude-code-flow
 ./claude-flow init --sparc
-
-# Start with UI
-./claude-flow start --ui --port 3000
 
 # Your first swarm command
 ./claude-flow swarm "Build a REST API with authentication" \
@@ -97,11 +105,11 @@ cd claude-code-flow
   <img src="assets/images/image.png" alt="Claude Code in Action" width="700">
 </p>
 
-The screenshot above shows Claude Code orchestrating multiple agents to create this very guide, demonstrating:
-- **TodoWrite** for task tracking and management
-- **Extended thinking** process (marked with *Thinking...*)
-- **Parallel agent spawning** for different research tasks
-- **Real-time execution** with Bash commands and specialized agents
+The screenshot above shows Claude Code's terminal interface in action, demonstrating:
+- **Interactive CLI session** with natural language commands
+- **File operations** reading and editing code directly
+- **Tool integration** with bash commands and specialized functions
+- **Real-time feedback** and code generation capabilities
 
 ### 🧠 Extended Thinking Modes
 > **Note**: These trigger phrases are experimental and not confirmed by official documentation.
