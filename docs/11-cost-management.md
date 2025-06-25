@@ -36,10 +36,10 @@ Effective cost management is crucial when using Claude Code at scale. This guide
 
 ## Installing ccusage
 
-The `ccusage` tool provides comprehensive token usage analytics:
+The `ccusage` tool provides comprehensive token usage analytics for local Claude Code JSONL files:
 
 ```bash
-# Install globally
+# Install globally (recommended)
 npm install -g ccusage
 
 # Or use without installation  
@@ -50,6 +50,9 @@ npm install -g ccusage@2.1.0
 
 # Verify installation
 ccusage --version
+
+# Get help
+ccusage --help
 ```
 
 ## Usage Monitoring
@@ -77,6 +80,16 @@ ccusage --json > usage-report.json
 
 # Show cost breakdown by model
 ccusage daily --breakdown
+
+# Filter by specific directory
+ccusage --dir /path/to/project
+
+# Show only recent activity
+ccusage --recent
+
+# Export data in various formats
+ccusage export --format csv --output usage.csv
+ccusage export --format json --output usage.json
 ```
 
 ### Understanding the Output
@@ -106,6 +119,15 @@ ccusage blocks --live
 # - Tokens used in window
 # - Remaining capacity
 # - Estimated cost
+
+# View specific billing window
+ccusage blocks --window 2025-01-15T10:00:00Z
+
+# Alert when approaching limits
+ccusage blocks --alert 80  # Alert at 80% capacity
+
+# Historical window analysis
+ccusage blocks --history --days 7
 ```
 
 ## Cost Optimization Strategies

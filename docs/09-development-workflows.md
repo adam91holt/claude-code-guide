@@ -6,13 +6,21 @@
 
 ## Overview
 
-This guide covers proven development workflows that maximize productivity with Claude Code. Each workflow is designed for specific scenarios and can be combined for complex projects.
+This guide covers Anthropic's officially recommended development workflows that maximize productivity with Claude Code. These workflows are based on extensive research and real-world usage patterns from Anthropic's engineering team.
+
+**Core Philosophy:** Claude Code is designed to be flexible and unopinionated, allowing you to adapt these workflows to your specific needs.
 
 ## Core Workflows
 
-### 1. Research-Plan-Implement Workflow
+### 1. Explore-Plan-Code-Commit Workflow (Anthropic's Primary Recommendation)
 
-The most effective approach for complex features. Research and planning are crucial—without them, Claude tends to jump straight to coding.
+Anthropic's core recommended workflow for complex features. Research and planning are crucial—without them, Claude tends to jump straight to coding.
+
+**Official Anthropic Steps:**
+1. **Explore**: Read relevant files and understand context
+2. **Plan**: Use think modes for deeper analysis and create implementation plan
+3. **Code**: Write code following the plan
+4. **Commit**: Commit changes with clear, descriptive messages
 
 ```bash
 # Step 1: Research
@@ -33,28 +41,32 @@ The most effective approach for complex features. Research and planning are cruc
 
 ### 2. Test-Driven Development (TDD)
 
-Anthropic's favorite workflow for changes easily verifiable with tests.
+**Anthropic's favorite workflow** for changes easily verifiable with tests. Particularly effective when requirements are clear and testable.
 
 ```bash
 # Start TDD session
 ./claude-flow sparc tdd "User registration with email verification"
 ```
 
-**TDD Cycle:**
-1. **Write failing test**
+**Official Anthropic TDD Cycle:**
+1. **Write failing test first**
    ```javascript
    describe('User Registration', () => {
      it('should send verification email', async () => {
        const result = await registerUser(userData);
        expect(emailService.send).toHaveBeenCalled();
+       expect(result.success).toBe(true);
      });
    });
    ```
 
-2. **Implement minimal code**
-3. **Make test pass**
-4. **Refactor**
-5. **Repeat**
+2. **Confirm test fails initially** (red)
+3. **Implement minimal code to pass** (green)
+4. **Refactor while keeping tests green**
+5. **Commit incrementally**
+6. **Repeat cycle**
+
+**Key Anthropic Insight:** This workflow ensures clear specifications before implementation and provides immediate feedback on correctness.
 
 ### 3. Bug Investigation Workflow
 
@@ -114,6 +126,68 @@ Complete feature implementation:
 # - Testing
 # - Documentation
 ```
+
+### 3. Visual Iteration Approach (Anthropic Recommended for UI Work)
+
+**Essential for effective UI development** - Anthropic strongly recommends this for any visual work.
+
+```bash
+# Step 1: Capture current state
+claude> Take screenshot of current dashboard layout
+
+# Step 2: Provide visual mock or design
+claude> Here's the desired layout [attach mockup image]
+        Implement this design using React and Tailwind CSS
+
+# Step 3: Implement changes
+claude> Update the dashboard component with new layout
+
+# Step 4: Visual validation
+claude> Take screenshot of implemented changes
+        Compare with original mockup
+
+# Step 5: Iterate based on visual feedback
+claude> Adjust spacing and colors based on comparison
+        Fine-tune responsive behavior
+        Take final screenshot to confirm
+```
+
+**Benefits:**
+- Immediate visual validation
+- Reduces miscommunication about UI requirements
+- Faster iteration cycles
+- Documents the evolution of the interface
+- Easier to spot layout and styling issues
+
+### 4. Multi-Claude Strategy (Advanced Anthropic Technique)
+
+**For complex projects requiring parallel development:**
+
+```bash
+# Terminal 1: Main feature development
+git worktree add ../project-auth feature/authentication
+cd ../project-auth
+claude> Implement authentication system
+
+# Terminal 2: Database migrations (parallel)
+git worktree add ../project-db feature/database-updates
+cd ../project-db  
+claude> Create and test database migrations
+
+# Terminal 3: Frontend components (parallel)
+git worktree add ../project-ui feature/ui-components
+cd ../project-ui
+claude> Build React components for new features
+
+# Terminal 4: Main branch (hotfixes)
+claude> Fix critical production issues on main branch
+```
+
+**Key Advantages:**
+- Multiple Claude instances work simultaneously
+- No context switching between branches
+- Parallel development of independent features
+- Main branch stays stable for hotfixes
 
 ## Specialized Workflows
 
@@ -242,20 +316,35 @@ TodoWrite([
 ]);
 ```
 
-### 2. Memory-Driven Workflows
+### 2. Memory-Driven Workflows (Anthropic's Context Management)
+
+**Essential for maintaining context across sessions:**
 
 ```javascript
-// Store workflow state
+// Store workflow state with Anthropic's recommended structure
 Memory.store("workflow/current", {
   stage: "implementation",
   completedSteps: ["research", "design"],
   nextSteps: ["coding", "testing"],
-  blockers: []
+  blockers: [],
+  context: "Working on user authentication feature",
+  decisions: ["Use JWT tokens", "PostgreSQL for user storage"],
+  timestamp: new Date().toISOString()
 });
 
-// Resume workflow later
+// Resume workflow later with full context
 const state = Memory.get("workflow/current");
+claude> Resuming work on ${state.context}.
+        Completed: ${state.completedSteps.join(', ')}
+        Next: ${state.nextSteps.join(', ')}
+        Previous decisions: ${state.decisions.join(', ')}
 ```
+
+**Anthropic's Context Management Best Practices:**
+- Use `/clear` to reset context window when above 80%
+- Store important context in Memory before clearing
+- Provide specific, detailed instructions for context continuity
+- Use subagents for complex problems requiring focused context
 
 ### 3. Checkpoint System
 
@@ -268,19 +357,33 @@ Memory.store("checkpoint/after-design", {
 });
 ```
 
-### 4. Parallel vs Sequential
+### 4. Parallel vs Sequential (Anthropic Guidelines)
 
 **Use Parallel for:**
 - Independent components
-- Multiple file operations
+- Multiple file operations  
 - Research tasks
 - Test creation
+- UI component development
+- Documentation generation
+- Code analysis tasks
 
 **Use Sequential for:**
 - Dependent operations
 - Database migrations
 - Deployment steps
 - Critical fixes
+- Authentication flows
+- Payment processing
+- Security implementations
+
+**Anthropic's Advanced Technique:**
+```bash
+# Leverage headless mode for automation
+./claude-flow sparc run researcher "API best practices" --headless
+./claude-flow sparc run architect "Design API structure" --headless
+# Results stored in Memory for next phase
+```
 
 ## Workflow Templates
 
@@ -324,27 +427,51 @@ TodoWrite([...todaysTasks])
 Memory.store("daily/progress", progressSummary)
 ```
 
-## Measuring Workflow Efficiency
+## Measuring Workflow Efficiency (Anthropic's Approach)
+
+**Key Metrics to Track:**
+- Time to completion
+- Token usage efficiency
+- Number of iterations required
+- Error rate and debugging time
+- Context window utilization
 
 ```python
-# Track workflow metrics
+# Track workflow metrics with Anthropic's recommended approach
 def track_workflow_metrics(workflow_name):
     start_time = time.time()
     tokens_start = get_token_count()
+    context_start = get_context_usage()
     
     # Execute workflow
     execute_workflow(workflow_name)
     
-    # Calculate metrics
+    # Calculate comprehensive metrics
     duration = time.time() - start_time
     tokens_used = get_token_count() - tokens_start
+    context_used = get_context_usage() - context_start
     
     Memory.store(f"metrics/{workflow_name}", {
         "duration": duration,
         "tokens": tokens_used,
+        "context_efficiency": context_used / tokens_used,
         "cost": calculate_cost(tokens_used),
-        "efficiency": calculate_efficiency(duration, tokens_used)
+        "workflow_type": determine_workflow_type(workflow_name),
+        "success_rate": calculate_success_rate(),
+        "iterations": count_iterations(),
+        "timestamp": new Date().toISOString()
     })
+
+# Anthropic's efficiency optimization tips
+def optimize_workflow_efficiency():
+    """Based on Anthropic's research:
+    - Use think modes for complex reasoning
+    - Provide clear, specific instructions
+    - Iterate multiple times for best results
+    - Leverage visual feedback for UI work
+    - Use Memory for context persistence
+    """
+    pass
 ```
 
 ## Next Steps

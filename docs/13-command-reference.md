@@ -226,51 +226,56 @@
 ### MCP Server Management
 
 ```bash
-# Start MCP server
+# Start MCP server (claude-flow command)
 ./claude-flow mcp start [options]
   --port <number>   # Port number
   --host <string>   # Host address
 
-# Check status
+# Check status (claude-flow command)
 ./claude-flow mcp status
   --detailed        # Detailed info
 
-# List tools
+# List tools (claude-flow command)
 ./claude-flow mcp tools
   --server <name>   # Specific server
 
-# Add server
+# Add server (claude-flow command)
 ./claude-flow mcp add <name> [options]
   -s, --scope <scope>  # project, user, global
   -e, --env <KEY=val>  # Environment variables
   -- <command>         # Server command
 
-# Remove server
+# Remove server (claude-flow command)
 ./claude-flow mcp remove <name>
   --scope <scope>   # Scope to remove from
 
-# List servers
+# List servers (claude-flow command)
 ./claude-flow mcp list
   --remote          # Include remote servers
   --scope <scope>   # Filter by scope
 
-# Debug mode
-claude --mcp-debug
+# Debug mode (if available in desktop app)
+# Check desktop app documentation for MCP debugging
 ```
 
-### Claude Integration (Claude-Flow Specific)
+### Claude Integration Commands
 
-> **Note**: These commands are claude-flow specific, not native Claude Code.
+> **Important Distinction**: 
+> - **Claude Code**: Runs within desktop app, no separate CLI
+> - **Claude-Flow**: Separate tool with its own commands
 
 ```bash
-# Authentication (claude-flow only)
+# Claude-Flow Authentication (separate tool)
 ./claude-flow claude auth
 
-# List models (claude-flow only)
+# Claude-Flow Model List (separate tool)
 ./claude-flow claude models
 
-# Interactive chat (claude-flow only) 
+# Claude-Flow Interactive Chat (separate tool)
 ./claude-flow claude chat
+
+# Note: Native Claude Code uses desktop app interface
+# No equivalent CLI commands for core Claude Code
 ```
 
 ### Session Management
@@ -382,6 +387,102 @@ Memory.query('project/*/config')
 
 // Namespaces
 Memory.store('key', data, { namespace: 'session-123' })
+```
+
+## ccusage Commands
+
+> **ccusage** is a specialized CLI tool for analyzing Claude Code token usage from local JSONL files.
+
+### Installation & Basic Usage
+
+```bash
+# Install globally
+npm install -g ccusage
+
+# View basic usage
+ccusage
+
+# Get help
+ccusage --help
+
+# Check version
+ccusage --version
+```
+
+### Usage Analysis Commands
+
+```bash
+# Daily analysis (default command)
+ccusage daily
+ccusage daily --since 2025-01-01 --until 2025-01-31
+ccusage daily --breakdown  # Show cost breakdown by model
+
+# Monthly summaries
+ccusage monthly
+ccusage monthly --year 2025
+
+# Billing window monitoring (5-hour windows)
+ccusage blocks
+ccusage blocks --live        # Live updates
+ccusage blocks --current     # Current window only
+ccusage blocks --history     # Historical windows
+
+# Recent activity
+ccusage recent
+ccusage --recent --hours 24  # Last 24 hours
+```
+
+### Filtering & Export Options
+
+```bash
+# Directory filtering
+ccusage --dir /path/to/project
+ccusage daily --dir /specific/project --since 2025-01-01
+
+# Output formats
+ccusage --json > usage.json
+ccusage daily --csv > daily_usage.csv
+ccusage export --format json --output usage_report.json
+ccusage export --format csv --output usage_report.csv
+
+# Model-specific analysis
+ccusage daily --model opus-4
+ccusage daily --model sonnet-4
+ccusage --model-breakdown
+```
+
+### Advanced Analysis
+
+```bash
+# Cost analysis
+ccusage cost-analysis --period month
+ccusage cost-trends --days 30
+
+# Usage patterns
+ccusage patterns --detect-peaks
+ccusage usage-distribution
+
+# Comparison analysis
+ccusage compare --period1 "2025-01-01:2025-01-15" --period2 "2025-01-16:2025-01-31"
+
+# Alerting
+ccusage alert --daily-limit 100.00
+ccusage alert --monthly-limit 1000.00
+```
+
+### Reporting & Integration
+
+```bash
+# Generate reports
+ccusage report --type summary --output summary.pdf
+ccusage report --type detailed --period month
+
+# Integration with monitoring
+ccusage webhook --url https://your-webhook.com/claude-usage
+ccusage slack-notify --channel #dev-costs
+
+# Batch processing
+ccusage batch-analyze --directory /projects --recursive
 ```
 
 ## Exit Codes

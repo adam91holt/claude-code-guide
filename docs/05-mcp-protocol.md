@@ -72,19 +72,19 @@ Edit `.mcp.json` directly in your project root:
 ./claude-flow mcp add my-server -s project -- npx "@myorg/mcp-server"
 
 # Add user-scoped server (available in all projects)
-claude mcp add my-server -s user -- npx "@myorg/mcp-server"
+./claude-flow mcp add my-server -s user -- npx "@myorg/mcp-server"
 
 # Add with environment variables
-claude mcp add api-server \
+./claude-flow mcp add api-server \
   -e API_KEY=your-key \
   -e API_URL=https://api.example.com \
   -- npx "@example/mcp-api-server"
 
 # List configured servers
-claude mcp list
+./claude-flow mcp list
 
 # Remove a server
-claude mcp remove my-server
+./claude-flow mcp remove my-server
 ```
 
 ## Popular MCP Servers
@@ -326,13 +326,13 @@ server.connect(transport);
 The following shows potential future support for remote MCP servers:
 
 ```bash
-# Connect to remote MCP server
-claude mcp add remote-analytics \
+# Connect to remote MCP server (hypothetical future feature)
+./claude-flow mcp add remote-analytics \
   --remote https://mcp.analytics.com \
   --auth oauth
 
 # List remote servers
-claude mcp list --remote
+./claude-flow mcp list --remote
 
 # Configure OAuth callback
 export CLAUDE_OAUTH_CALLBACK=http://localhost:3000/oauth/callback
